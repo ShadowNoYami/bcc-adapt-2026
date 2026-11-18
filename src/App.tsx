@@ -9,7 +9,6 @@ import {
   Fingerprint,
   Menu,
   MonitorPlay,
-  Play,
   X,
 } from "lucide-react";
 import bank from "./assets/centercredit.svg";
@@ -18,7 +17,6 @@ import { HeroArt } from "./Art";
 import {
   Architecture,
   Budget,
-  Demo,
   Economics,
   Journey,
   Problem,
@@ -38,7 +36,7 @@ function Hero({ go }: { go: (i: number) => void }) {
             <span /> V региональный ITU HACKATHON-2026
           </div>
           <h1>
-            BCC <em>Adapt</em>
+            BCC <span>Adapt</span>
           </h1>
           <h2>
             Банкинг, который
@@ -52,9 +50,6 @@ function Hero({ go }: { go: (i: number) => void }) {
           <div className="hero-actions">
             <button className="btn mint" onClick={() => go(3)}>
               Настроить интерфейс <ArrowUpRight size={18} />
-            </button>
-            <button className="btn ghost" onClick={() => go(6)}>
-              <Play size={15} /> Live Demo
             </button>
           </div>
           <div className="hero-logos">
@@ -93,7 +88,6 @@ const bodies = [
   Journey,
   Safety,
   Architecture,
-  Demo,
   Budget,
   Economics,
   Roadmap,
@@ -102,12 +96,15 @@ export default function App() {
   const [deck, setDeck] = useState(false),
     [current, setCurrent] = useState(0),
     [menu, setMenu] = useState(false);
+  const [direction, setDirection] = useState("forward");
   const returnFocus = useRef<HTMLButtonElement>(null),
     menuBtn = useRef<HTMLButtonElement>(null),
     main = useRef<HTMLElement>(null);
   function go(i: number) {
     setMenu(false);
     if (deck) {
+      if (i === current) return;
+      setDirection(i > current ? "forward" : "back");
       setCurrent(i);
       return;
     }
@@ -127,6 +124,7 @@ export default function App() {
   }
   function enter() {
     setMenu(false);
+    setDirection("forward");
     setDeck(true);
     if (document.documentElement.requestFullscreen)
       document.documentElement.requestFullscreen().catch(() => {});
@@ -173,11 +171,11 @@ export default function App() {
         return;
       if (["ArrowRight", "ArrowDown", " "].includes(e.key)) {
         e.preventDefault();
-        setCurrent((v) => Math.min(9, v + 1));
+        go(Math.min(names.length - 1, current + 1));
       }
       if (["ArrowLeft", "ArrowUp"].includes(e.key)) {
         e.preventDefault();
-        setCurrent((v) => Math.max(0, v - 1));
+        go(Math.max(0, current - 1));
       }
     }
     const fullscreen = () => {
@@ -212,7 +210,7 @@ export default function App() {
               [0, "Обзор"],
               [2, "Решение"],
               [5, "Архитектура"],
-              [8, "Экономика"],
+              [ids.indexOf("economics"), "Экономика"],
             ].map(([i, label]) => (
               <button
                 key={i}
@@ -268,13 +266,13 @@ export default function App() {
           </>
         )}
       </header>
-      <main ref={main} id="main" tabIndex={-1}>
+      <main data-direction={direction} ref={main} id="main" tabIndex={-1}>
         {names.map((name, i) => {
           if (deck && i !== current) return null;
           const Body = bodies[i];
           return (
             <section
-              key={name}
+              key={(deck ? "slide-" : "page-") + name}
               aria-label={name}
               tabIndex={-1}
               id={ids[i]}
@@ -282,11 +280,11 @@ export default function App() {
                 "section s" +
                 i +
                 " " +
-                ([0, 2, 5, 6, 9].includes(i) ? "dark" : "light")
+                ([0, 2, 5, 8].includes(i) ? "dark" : "light")
               }
             >
               <motion.div
-                initial={{ opacity: 0.86, y: 8 }}
+                initial={deck ? false : { opacity: 0.86, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.42 }}
@@ -301,9 +299,14 @@ export default function App() {
       {deck ? (
         <footer className="deck-controls">
           <span aria-live="polite">
-            {String(current + 1).padStart(2, "0")} / 10 · {names[current]}
+            {String(current + 1).padStart(2, "0")} / {names.length} ·{" "}
+            {names[current]}
           </span>
-          <progress aria-label="Прогресс показа" value={current + 1} max={10} />
+          <progress
+            aria-label="Прогресс показа"
+            value={current + 1}
+            max={names.length}
+          />
           <button
             disabled={!current}
             onClick={() => go(current - 1)}
@@ -312,7 +315,7 @@ export default function App() {
             <ArrowLeft />
           </button>
           <button
-            disabled={current === 9}
+            disabled={current === names.length - 1}
             onClick={() => go(current + 1)}
             aria-label="Далее"
           >

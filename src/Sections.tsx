@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Activity,
   AudioLines,
   Banknote,
   Check,
   ChevronRight,
-  CirclePause,
-  CirclePlay,
   Cpu,
   Database,
   Eye,
@@ -15,16 +13,13 @@ import {
   LayoutGrid,
   LockKeyhole,
   Mic,
-  PanelsTopLeft,
-  PersonStanding,
-  RotateCcw,
   ScanEye,
   ShieldCheck,
   Smartphone,
   Users,
   Wallet,
 } from "lucide-react";
-import Accessibility, { Phone } from "./Accessibility";
+import Accessibility from "./Accessibility";
 import Transfer from "./Transfer";
 
 export const names = [
@@ -34,7 +29,6 @@ export const names = [
   "Путь пользователя",
   "Безопасный перевод",
   "Архитектура",
-  "Live Demo",
   "Внедрение",
   "Экономика",
   "Дорожная карта",
@@ -46,7 +40,6 @@ export const ids = [
   "profile",
   "transfer",
   "architecture",
-  "demo",
   "budget",
   "economics",
   "roadmap",
@@ -63,7 +56,9 @@ export function Head({
   return (
     <header className="section-head">
       <div className="smallcap section-label">
-        <span>{String(index + 1).padStart(2, "0")} / 10</span>
+        <span>
+          {String(index + 1).padStart(2, "0")} / {names.length}
+        </span>
         {names[index]}
       </div>
       <h2>{title}</h2>
@@ -294,137 +289,6 @@ export function Architecture() {
   );
 }
 
-const episodes = [
-  [
-    "00:00–00:15",
-    "Умный старт",
-    "Приветствие, голосовая подсказка и выбор языка.",
-  ],
-  [
-    "00:15–00:30",
-    "Персонализация",
-    "Контраст, защита от повторных касаний и текст 200%.",
-  ],
-  [
-    "00:30–01:00",
-    "Безопасный перевод",
-    "Голосовой черновик, проверка суммы, пауза и удержание.",
-  ],
-];
-export function Demo() {
-  const [time, setTime] = useState(0),
-    [playing, setPlaying] = useState(false),
-    [kk, setKk] = useState(false);
-  useEffect(() => {
-    if (!playing) return;
-    const start = performance.now() - time * 1000;
-    const id = setInterval(() => {
-      const n = Math.min(60, Math.floor((performance.now() - start) / 1000));
-      setTime(n);
-      if (n >= 60) setPlaying(false);
-    }, 160);
-    return () => clearInterval(id);
-    // Playback starts from the selected second and follows the elapsed clock.
-  }, [playing]);
-  const scene = time < 15 ? 0 : time < 30 ? 1 : 2;
-  return (
-    <>
-      <Head
-        index={6}
-        title="Весь сценарий за минуту"
-        lead="Запустите показ или выберите эпизод. Показ воспроизводит этапы калибровки и безопасного перевода."
-      />
-      <div className="demo-grid">
-        <div>
-          <div className="chapters">
-            {episodes.map(([range, title, body], i) => (
-              <button
-                key={title}
-                aria-pressed={scene === i}
-                onClick={() => {
-                  setPlaying(false);
-                  setTime([0, 15, 30][i]);
-                }}
-              >
-                <small>{range}</small>
-                <b>{title}</b>
-                <span>{body}</span>
-              </button>
-            ))}
-          </div>
-          <div className="playbar">
-            <button
-              className="btn mint"
-              onClick={() => {
-                if (time === 60) setTime(0);
-                setPlaying(!playing);
-              }}
-            >
-              {playing ? (
-                <CirclePause />
-              ) : time === 60 ? (
-                <RotateCcw />
-              ) : (
-                <CirclePlay />
-              )}
-              {playing ? "Пауза" : time === 60 ? "Повторить" : "Смотреть"}
-            </button>
-            <output>
-              {time === 60 ? "01:00" : "00:" + String(time).padStart(2, "0")} /
-              01:00
-            </output>
-          </div>
-        </div>
-        <div className="scene">
-          {scene === 0 ? (
-            <>
-              <PersonStanding size={42} />
-              <h3>{kk ? "Қош келдіңіз!" : "Добро пожаловать!"}</h3>
-              <p>
-                {time >= 5
-                  ? kk
-                    ? "Дыбыстық көмекті қосу керек пе?"
-                    : "Включить голосовую подсказку?"
-                  : kk
-                    ? "Тілді таңдаңыз"
-                    : "Выберите язык интерфейса"}
-              </p>
-              <div className="language">
-                <button aria-pressed={!kk} onClick={() => setKk(false)}>
-                  РУС
-                </button>
-                <button aria-pressed={kk} onClick={() => setKk(true)}>
-                  ҚАЗ
-                </button>
-              </div>
-            </>
-          ) : scene === 1 ? (
-            <Phone scale={200} large simple contrast kazakh={kk} />
-          ) : (
-            <>
-              <ShieldCheck size={44} />
-              <small>Демонстрация подтверждения</small>
-              <h3>100 000 ₸</h3>
-              <p>Сто тысяч тенге · Арман</p>
-              <div className="scene-status">
-                {time < 43
-                  ? "Заполнен голосовой черновик"
-                  : time < 50
-                    ? "Проверьте сумму и реквизиты"
-                    : time < 55
-                      ? "Антифрод-пауза · " + (55 - time) + " с"
-                      : time < 57
-                        ? "Удержание кнопки · 1,5 с"
-                        : "Демо-перевод подтверждён"}
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </>
-  );
-}
-
 const expenses = [
   [
     "UI-Kit и адаптивное ядро",
@@ -447,35 +311,64 @@ export function Budget() {
   return (
     <>
       <Head
-        index={7}
+        index={6}
         title="Восемь недель на интеграцию"
         lead="Предварительная оценка команды. Срок промышленного запуска зависит от банковских API, требований безопасности и согласований."
       />
-      <div className="budget-top">
-        <span>Бюджет внедрения</span>
-        <strong>
-          5,3 <em>млн ₸</em>
-        </strong>
-      </div>
-      <div className="stack-bar" aria-hidden="true">
-        {expenses.map(([name, , , , cost], i) => (
-          <i key={name} className={"tone-" + i} style={{ flex: cost }} />
-        ))}
-      </div>
-      <div className="expense-list">
-        {expenses.map(([name, duration, team, result, cost], i) => (
-          <div key={name}>
-            <span className={"swatch tone-" + i} />
-            <span>
-              <b>{name}</b>
-              <small>
-                {team} · {result}
-              </small>
-            </span>
-            <span>{duration}</span>
-            <strong>{cost.toLocaleString("ru-RU")} ₸</strong>
+      <div className="budget-layout">
+        <div className="budget-summary">
+          <svg className="budget-ring" viewBox="0 0 120 120" aria-hidden="true">
+            {expenses.map(([name, , , , cost], i) => {
+              const total = expenses.reduce((sum, row) => sum + row[4], 0);
+              const start = expenses
+                .slice(0, i)
+                .reduce((sum, row) => sum + row[4], 0);
+              const share = (cost / total) * 100;
+              return (
+                <circle
+                  key={name}
+                  cx="60"
+                  cy="60"
+                  r="50"
+                  pathLength="100"
+                  className={"tone-" + i}
+                  fill="none"
+                  strokeWidth="12"
+                  strokeDasharray={`${share - 0.8} ${100 - share + 0.8}`}
+                  strokeDashoffset={(-start / total) * 100}
+                />
+              );
+            })}
+          </svg>
+          <div className="budget-top">
+            <span>Бюджет внедрения</span>
+            <strong>
+              5,3 <em>млн ₸</em>
+            </strong>
           </div>
-        ))}
+        </div>
+        <div className="budget-breakdown">
+          <div className="stack-bar" aria-hidden="true">
+            {expenses.map(([name, , , , cost], i) => (
+              <i key={name} className={"tone-" + i} style={{ flex: cost }} />
+            ))}
+          </div>
+          <div className="expense-list">
+            {expenses.map(([name, duration, team, result, cost], i) => (
+              <div key={name}>
+                <span className={"swatch tone-" + i} />
+                <span>
+                  <b>{name}</b>
+                  <small>
+                    {team} · {result}
+                  </small>
+                </span>
+                <span>{duration}</span>
+                <strong>{cost.toLocaleString("ru-RU")} ₸</strong>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       <p className="fine">
         В модели расходы на внешние LLM API — 0 ₸. Эксплуатация, безопасность и
@@ -493,7 +386,7 @@ export function Economics() {
   return (
     <>
       <Head
-        index={8}
+        index={7}
         title="Когда окупится внедрение?"
         lead="Сценарная модель проекта. Предполагаемый эффект предстоит проверить по регистрации клиентов 60+, обращениям, объёму операций и результатам антифрода."
       />
@@ -554,7 +447,7 @@ export function Roadmap() {
   return (
     <>
       <Head
-        index={9}
+        index={8}
         title="Следующий шаг — пилот"
         lead="Независимый UX-аудит и проверка с реальными клиентами покажут, какие сценарии готовы к интеграции."
       />

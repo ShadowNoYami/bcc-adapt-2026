@@ -1,0 +1,371 @@
+/* Projection layouts use the same content and controls as the scrolling site. */
+.budget-ring {
+  display: none;
+}
+.deck main {
+  overflow-x: clip;
+  --travel: 36px;
+}
+.deck main[data-direction="back"] {
+  --travel: -36px;
+}
+.deck .section {
+  position: relative;
+  isolation: isolate;
+}
+.deck #overview {
+  background: radial-gradient(
+    ellipse at 78% 46%,
+    #24513a,
+    #0b251a 48%,
+    #091e17 78%
+  );
+}
+.deck #solution,
+.deck #architecture,
+.deck #roadmap {
+  background:
+    radial-gradient(ellipse at 93% 0%, #27513b, transparent 58%), #0b241b;
+}
+.deck .section-label {
+  margin-bottom: 14px;
+}
+.deck .section-head h2 {
+  text-wrap: balance;
+  line-height: 1.05;
+}
+.deck .section-head {
+  max-width: 950px;
+}
+.deck .problem-grid {
+  gap: clamp(12px, 2vw, 26px);
+}
+.deck .problem-grid article {
+  background: #fcfcf6;
+  padding: clamp(18px, 2vw, 28px);
+  border: 1px solid #b9cebd;
+  border-radius: 18px 18px 18px 2px;
+}
+.deck .problem-grid article > svg {
+  box-sizing: content-box;
+  padding: 10px;
+  border-radius: 12px;
+  background: #deecdb;
+  margin-bottom: 18px;
+}
+.deck .solution-grid {
+  gap: 0;
+  border-block: 1px solid #597b64;
+}
+.deck .solution-grid article {
+  border: 0;
+  padding: 22px clamp(14px, 2vw, 28px);
+}
+.deck .solution-grid article + article {
+  border-inline-start: 1px solid #456c52;
+}
+.deck .solution-grid strong {
+  font-size: clamp(32px, 3.55vw, 59px);
+  margin: 20px 0 12px;
+  font-variant-numeric: tabular-nums;
+}
+.deck #transfer .story-list {
+  position: relative;
+}
+.deck #transfer .story-list::before {
+  content: "";
+  position: absolute;
+  inset: 10px auto 12px 11px;
+  width: 1px;
+  background: #95b69e;
+}
+.deck #transfer .story > svg {
+  position: relative;
+  background: #e8efe5;
+  box-shadow: 0 0 0 5px #e8efe5;
+}
+.deck .nodes button[aria-pressed="true"] {
+  box-shadow: 0 8px 35px #091e1760;
+}
+.deck .nodes .connector {
+  color: #bce8b8;
+}
+.deck .budget-layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.66fr) minmax(0, 1.6fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 78px);
+}
+.deck .budget-summary {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.deck .budget-ring {
+  width: min(100%, 280px);
+  height: auto;
+  display: block;
+  rotate: -90deg;
+}
+.budget-ring .tone-0 {
+  stroke: #216248;
+}
+.budget-ring .tone-1 {
+  stroke: #81ad81;
+}
+.budget-ring .tone-2 {
+  stroke: #d9be83;
+}
+.budget-ring .tone-3 {
+  stroke: #5e8276;
+}
+.deck .budget-top {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+.deck .budget-top strong {
+  font-size: clamp(29px, 3.4vw, 51px);
+}
+.deck .budget-top span {
+  font-size: 12px;
+}
+.deck .stack-bar {
+  display: none;
+}
+.deck #economics .projection {
+  border-top: 4px solid #2c6746;
+}
+.deck .timeline {
+  position: relative;
+  gap: 0;
+}
+.deck .timeline article {
+  border: 0;
+  position: relative;
+  padding: 28px 26px 10px 0;
+}
+.deck .timeline article::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #d9c58d;
+  border: 3px solid #203f2e;
+  box-shadow: 0 0 0 1px #b8a87b;
+}
+.deck .timeline::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #d9c58d, #799d78, transparent);
+}
+@media (max-width: 900px) {
+  .deck .solution-grid article:nth-child(3) {
+    border-inline-start: 0;
+  }
+  .deck .solution-grid article:nth-child(n + 3) {
+    border-top: 1px solid #456c52;
+  }
+}
+@media (max-width: 700px) {
+  .deck .budget-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .deck .budget-ring {
+    width: 148px;
+  }
+  .deck .budget-top span {
+    font-size: 10px;
+  }
+  .deck .timeline article {
+    padding: 0 0 22px 28px;
+  }
+  .deck .timeline::before {
+    top: 0;
+    bottom: 0;
+    left: 5px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(#d9c58d, #799d78, transparent);
+  }
+}
+@media (max-width: 440px) {
+  .deck .problem-grid {
+    grid-template-columns: 1fr;
+  }
+  .deck .problem-grid article {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 2px 12px;
+    padding: 14px;
+  }
+  .deck .problem-grid article > svg {
+    grid-row: span 2;
+    width: 20px;
+    height: 20px;
+    padding: 7px;
+    margin: 0;
+  }
+  .deck .problem-grid p {
+    margin-top: 3px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .deck .hero-content,
+  .deck .section-head {
+    animation: slide-title 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .deck .ribbon {
+    animation: silk-unfold 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .deck .concept-card {
+    animation: card-arrive 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .deck .art-tag {
+    animation: rise 0.46s 0.24s both;
+  }
+  .deck
+    :is(
+      .problem-grid,
+      .solution-grid,
+      .story-list,
+      .nodes,
+      .timeline,
+      .expense-list
+    )
+    > * {
+    animation: rise 0.46s var(--delay, 90ms) cubic-bezier(0.2, 0.75, 0.28, 1)
+      both;
+  }
+  .deck
+    :is(
+      .problem-grid,
+      .solution-grid,
+      .story-list,
+      .nodes,
+      .timeline,
+      .expense-list
+    )
+    > :nth-child(2) {
+    --delay: 170ms;
+  }
+  .deck
+    :is(
+      .problem-grid,
+      .solution-grid,
+      .story-list,
+      .nodes,
+      .timeline,
+      .expense-list
+    )
+    > :nth-child(3) {
+    --delay: 250ms;
+  }
+  .deck
+    :is(.problem-grid, .solution-grid, .story-list, .nodes, .expense-list)
+    > :nth-child(4) {
+    --delay: 330ms;
+  }
+  .deck .lab-controls,
+  .deck .transfer-box,
+  .deck .projection {
+    animation: rise 0.55s 80ms both;
+  }
+  .deck .phone {
+    animation: phone-arrive 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .deck .nodes .connector {
+    animation: signal-travel 0.52s var(--delay, 90ms) both;
+  }
+  .deck .budget-ring {
+    animation: chart-turn 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .deck .budget-ring circle {
+    animation: ring-trace 0.82s ease-out both;
+  }
+  .deck .effect i,
+  .deck .timeline::before {
+    transform-origin: left center;
+    animation: draw 0.72s 130ms both;
+  }
+  .deck .effect:nth-of-type(3) i {
+    animation-delay: 240ms;
+  }
+  @media (max-width: 700px) {
+    .deck .timeline::before {
+      transform-origin: top;
+      animation-name: draw-down;
+    }
+  }
+}
+@keyframes slide-title {
+  from {
+    opacity: 0;
+    translate: var(--travel) 0;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 15px;
+  }
+}
+@keyframes phone-arrive {
+  from {
+    opacity: 0;
+    transform: perspective(700px) translateY(22px) rotateY(-12deg);
+  }
+}
+@keyframes card-arrive {
+  from {
+    opacity: 0;
+    translate: 25px 18px;
+    rotate: 6deg;
+  }
+}
+@keyframes silk-unfold {
+  from {
+    opacity: 0.15;
+    transform: scale(0.9) rotate(-6deg);
+  }
+}
+@keyframes signal-travel {
+  from {
+    opacity: 0.1;
+    translate: -8px 0;
+  }
+}
+@keyframes chart-turn {
+  from {
+    rotate: -125deg;
+  }
+}
+@keyframes ring-trace {
+  from {
+    stroke-width: 1;
+    opacity: 0.25;
+  }
+}
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes draw-down {
+  from {
+    transform: scaleY(0);
+  }
+}

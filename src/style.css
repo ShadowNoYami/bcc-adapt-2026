@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter/wght.css";
 
-@import "@fontsource/cormorant-garamond/latin-500-italic.css";
 :root {
   font-family: "Inter Variable", Arial, sans-serif;
   color: #122b21;
@@ -111,13 +110,11 @@ p {
 .signal,
 .icon-title,
 .story,
-.playbar,
 .closing,
 .site-footer,
 .deck-controls,
 .spoken,
-.voice-example,
-.language {
+.voice-example {
   display: flex;
   align-items: center;
 }
@@ -256,11 +253,9 @@ p {
 .card-end small,
 .sys,
 .range-ends,
-.playbar output,
 .demo-note,
 .hero-bottom,
-.section-label,
-.scene > small {
+.section-label {
   font-family: "Inter Variable", Arial, sans-serif;
   font-variant-numeric: tabular-nums;
 }
@@ -297,11 +292,11 @@ p {
   font-weight: 560;
   white-space: nowrap;
 }
-.hero-content h1 em,
+.hero-content h1 > span,
 .card-end > span {
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: inherit;
   font-weight: 500;
-  font-style: italic;
+  font-style: normal;
   letter-spacing: -0.064em;
   color: var(--mint);
 }
@@ -589,8 +584,7 @@ article p,
   color: var(--muted);
   margin-top: 9px;
 }
-.s2,
-.s6 {
+.s2 {
   background: #123627;
 }
 .icon-title {
@@ -620,7 +614,6 @@ article p,
 }
 .lab,
 .two-col,
-.demo-grid,
 .economy {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -718,8 +711,7 @@ input[type="range"] {
 .lab-controls .fine {
   margin-top: 20px;
 }
-.phone-stage,
-.scene {
+.phone-stage {
   padding: 30px;
   display: grid;
   place-items: center;
@@ -761,7 +753,8 @@ input[type="range"] {
   font-weight: 700;
 }
 .phone-title em {
-  font-family: Georgia, serif;
+  font-family: inherit;
+  font-style: normal;
   color: #316246;
 }
 .balance {
@@ -1015,80 +1008,6 @@ input[type="range"] {
   color: var(--mint);
   font-weight: 550;
 }
-.chapters button {
-  display: grid;
-  grid-template-columns: 106px 1fr;
-  gap: 4px 12px;
-  text-align: left;
-  border-top: 1px solid #63816a;
-  width: 100%;
-  padding: 18px 8px;
-  color: #d5e3d8;
-}
-.chapters [aria-pressed="true"] {
-  background: #c6ffd10c;
-  border-left: 3px solid var(--mint);
-}
-.chapters small {
-  color: var(--gold);
-  font-size: 12px;
-}
-.chapters b {
-  font-size: 18px;
-}
-.chapters span {
-  grid-column: 2;
-  font-size: 13px;
-}
-.playbar {
-  margin-top: 18px;
-  justify-content: space-between;
-  gap: 12px;
-}
-.playbar output {
-  font-size: 13px;
-}
-.scene {
-  border-radius: 16px;
-  background: radial-gradient(ellipse at top, #325943, #193e2c);
-  border: 1px solid #547c61;
-  min-height: 315px;
-  gap: 10px;
-  align-content: center;
-  text-align: center;
-}
-.scene > svg {
-  color: var(--mint);
-}
-.scene h3 {
-  font-size: 29px;
-  letter-spacing: -0.04em;
-}
-.scene p {
-  color: #d2e0d2;
-}
-.language {
-  gap: 5px;
-}
-.language button,
-.scene-status {
-  border: 1px solid #7e9c83;
-  border-radius: 7px;
-  font-size: 13px;
-  padding: 6px 14px;
-}
-.language [aria-pressed="true"] {
-  background: var(--mint);
-  color: var(--ink);
-}
-.scene .phone {
-  text-align: left;
-  width: 205px;
-  font-size: 18px;
-}
-.scene .phone-actions > div {
-  min-height: 42px;
-}
 .budget-top {
   justify-content: flex-start;
   align-items: baseline;
@@ -1148,10 +1067,10 @@ input[type="range"] {
 .expense-list strong {
   text-align: right;
 }
-.s7 .fine {
+#budget .fine {
   margin-top: 18px;
 }
-.s8 {
+#economics {
   background: #e5eee3;
 }
 .economy h3 {
@@ -1327,7 +1246,6 @@ input[type="range"] {
     padding: 0;
   }
   .two-col,
-  .demo-grid,
   .economy {
     gap: 24px;
   }
@@ -1372,7 +1290,7 @@ input[type="range"] {
     padding: 38px 0 12px;
   }
   .hero-content h1 {
-    font-size: clamp(73px, 15.5vw, 97px);
+    font-size: clamp(50px, 18vw, 97px);
     margin: 17px 0;
   }
   .hero-content h2 {
@@ -1435,7 +1353,6 @@ input[type="range"] {
   }
   .lab,
   .two-col,
-  .demo-grid,
   .economy {
     grid-template-columns: 1fr;
   }
@@ -1461,9 +1378,6 @@ input[type="range"] {
   .timeline {
     grid-template-columns: 1fr;
     gap: 0;
-  }
-  .scene {
-    min-height: 260px;
   }
   .ready {
     gap: 12px;
@@ -1537,9 +1451,6 @@ input[type="range"] {
   }
   .expense-list > div > span:nth-child(2) {
     grid-column: 2/-1;
-  }
-  .chapters button {
-    grid-template-columns: 84px 1fr;
   }
   .hero-bottom > span {
     max-width: 77%;
